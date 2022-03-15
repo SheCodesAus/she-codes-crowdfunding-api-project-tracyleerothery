@@ -1,5 +1,19 @@
+from unittest.util import _MAX_LENGTH
 from rest_framework import serializers
-from .models import Project
+from .models import Project, Pledge
+
+
+class PledgeSerializer(serializers.Serializer):
+    id = serializers.ReadOnlyField()
+    amount = serializers.IntegerField()
+    anonymous = serializers.BooleanField()
+    supporter = serializers.CharField(max_length=200)
+    project_id = serializers.IntegerField()
+
+    def create(self, validated_data):
+        return Pledge.objects.create(**validated_data)
+
+
 
 class ProjectSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
@@ -9,6 +23,11 @@ class ProjectSerializer(serializers.Serializer):
     is_open = serializers.BooleanField()
     date_created = serializers.DateTimeField()
     owner = serializers.CharField(max_length=200)
+    # pledges = PledgeSerializer(many=True, read_only=True)
+
 
     def create(self, validated_data):
         return Project.objects.create(**validated_data)
+
+class ProjectDetailSerializer(ProjectSerializer):
+    pledges = PledgeSerializer(many=True, read_only=True)
