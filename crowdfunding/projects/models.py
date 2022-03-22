@@ -19,6 +19,13 @@ class Project(models.Model):
         related_name='owner_projects'
         )
 
+    category = models.ForeignKey(
+        'Category',
+        null=True, blank=True,
+        on_delete=models.CASCADE,
+        related_name='project_id'
+    )
+
 class Pledge(models.Model):
     amount = models.IntegerField()
     comment = models.CharField(max_length=200)
@@ -34,4 +41,18 @@ class Pledge(models.Model):
         on_delete=models.CASCADE,
         related_name='supporter_pledges'
         )
+
+
+# created a class for category
+class Category(models.Model):
+    category_name = models.CharField(max_length=200)
+
+# added a link from projects to categories
+
+category = models.ForeignKey(
+        'Category',
+        null=True, blank=True,
+        on_delete=models.CASCADE,
+        related_name='project_id'
+    )
 
