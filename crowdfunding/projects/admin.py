@@ -1,9 +1,9 @@
 from django.contrib import admin
-from models import Project, Pledge, Category
+from .models import Project, Category
 # Register your models here.
 
 from django.contrib import admin
-from models import Category, Pledge, Project
+from .models import Category, Project
 
 # class CustomUserAdmin(UserAdmin):
 #     add_form = CustomUserCreationForm

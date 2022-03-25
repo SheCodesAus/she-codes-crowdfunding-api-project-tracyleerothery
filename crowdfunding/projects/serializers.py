@@ -2,7 +2,7 @@ from email.mime import image
 from unicodedata import category
 from unittest.util import _MAX_LENGTH
 from rest_framework import serializers
-from .models import Project, Pledge
+from .models import Project, Pledge, Category
 
 
 class PledgeSerializer(serializers.Serializer):
@@ -23,7 +23,7 @@ class ProjectSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
     title = serializers.CharField(max_length=200)
     description = serializers.CharField(max_length=None)
-    category = CategorySerializer(many=False, read_only=False)
+    # category = CategorySerializer(many=False, read_only=False)
     goal = serializers.IntegerField()
     goal_date = serializers.DateTimeField()
     progress = serializers.IntegerField()
