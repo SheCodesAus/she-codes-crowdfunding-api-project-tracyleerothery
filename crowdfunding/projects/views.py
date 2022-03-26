@@ -1,13 +1,22 @@
 from django.shortcuts import render
-from rest_framework import status, permissions
+from rest_framework import status, generics, permissions 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.pagination import LimitOffsetPagination
-from.models import Project, Pledge
-from .serializers import ProjectSerializer, PledgeSerializer, ProjectDetailSerializer
+from .models import Comment, Project, Pledge, Category
+
 from django.http import Http404
 from rest_framework import status
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsAuthorOrReadOnly, IsOwnerOrReadOnly
+from .serializers import (
+    CommentSerializer,
+    PledgeSerializer,
+    ProjectCommentSerializer, 
+    ProjectDetailSerializer,
+    ProjectSerializer,
+    CategorySerializer, 
+)
+
 
 class PledgeList(APIView):
     
@@ -87,3 +96,34 @@ class ProjectDetail(APIView):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CategoryList(generics.ListCreateAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
+class CommentListApi(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = Comment.objects.filter(visible=True)
+    serializer_class = CommentSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
+class CommentDetailApi(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
+    queryset = Comment.objects.filter(visible=True)
+    serializer_class = CommentSerializer
+
+
+class ProjectCommentListApi(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # queryset = Comment.objects.filter(visible=True)
+    serializer_class = ProjectCommentSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user, project_id=self.kwargs.get("pk"))
+
+    def get_queryset(self):
+        return Comment.objects.filter(project_id=self.kwargs.get("pk"))
+
