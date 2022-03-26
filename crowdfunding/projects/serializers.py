@@ -35,7 +35,7 @@ class ProjectSerializer(serializers.Serializer):
     # category = CategorySerializer(many=False, read_only=False)
     goal = serializers.IntegerField()
     # goal_date = serializers.DateTimeField()
-    progress = serializers.IntegerField()
+    # progress = serializers.IntegerField()
     image = serializers.URLField()
     status = serializers.CharField(max_length=200)
     is_open = serializers.BooleanField()
