@@ -37,7 +37,7 @@ class ProjectSerializer(serializers.Serializer):
     # goal_date = serializers.DateTimeField()
     # progress = serializers.IntegerField()
     image = serializers.URLField()
-    status = serializers.CharField(max_length=200)
+    # status = serializers.CharField(max_length=200)
     is_open = serializers.BooleanField()
     date_created = serializers.DateTimeField()
     # pledges = PledgeSerializer(many=True, read_only=True)
