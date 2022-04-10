@@ -1,17 +1,39 @@
+
 from rest_framework import serializers
 from .models import CustomUser
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
+# class BadgeSerializer(serializers.ModelSerializer):
+#     id = serializers.ReadOnlyField()
+
+#     class Meta:
+#         model = Badge
+#         fields = ['id', 'image', 'description', 'badge_type', 'badge_goal']
 
 class CustomUserSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
     username = serializers.CharField(max_length=200)
     email = serializers.CharField(max_length=200)
+    avatar = serializers.URLField()
+    bio = serializers.CharField(max_length=600)
+    website = serializers.URLField()
+    # badges = BadgeSerializer(read_only=True, many=True)
 
     def create(self, validated_data):
           return CustomUser.objects.create(**validated_data)
+
+
+class CustomUserDetailSerializer(CustomUserSerializer):
+        def update(self, instance, validated_data):
+            instance.username = validated_data.get('username',instance.username)
+            # instance.full_name = validated_data.get('full name',instance.full_name)
+            instance.avatar = validated_data.get('avatar', instance.avatar)
+            instance.bio = validated_data.get('bio', instance.bio)
+            instance.website = validated_data.get('website', instance.website)
+            instance.save()
+            return instance
 
 class BadgeSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
@@ -19,6 +41,8 @@ class BadgeSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=50)
     badge_type = serializers.CharField(max_length=50)
     user = serializers.IntegerField()
+
+
 
 
 class RegisterSerializer(serializers.ModelSerializer):
