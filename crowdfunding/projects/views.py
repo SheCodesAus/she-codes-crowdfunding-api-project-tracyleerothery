@@ -44,10 +44,8 @@ class ProjectList(APIView):
     def get(self, request):
         projects = Project.objects.all()
         serializer = ProjectSerializer(projects, many=True)
-        paginator = LimitOffsetPagination()
-        result_page = paginator.paginate_queryset(projects, request)
-
-        serializer = ProjectSerializer(result_page, many=True)
+        # paginator = LimitOffsetPagination()
+        # result_page = paginator.paginate_queryset(projects, request)
         return Response(serializer.data)
 
 
