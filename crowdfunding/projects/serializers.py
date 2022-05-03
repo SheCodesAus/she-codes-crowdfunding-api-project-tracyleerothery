@@ -2,6 +2,7 @@
 # from unicodedata import category
 # from unittest.util import _MAX_LENGTH
 # from xml.etree.ElementTree import Comment
+from turtle import title
 from rest_framework import serializers
 from .models import Project, Pledge, Category, Comment
 from django.contrib.auth import get_user_model
@@ -42,6 +43,9 @@ class ProjectSerializer(serializers.Serializer):
     date_created = serializers.DateTimeField()
     # pledges = PledgeSerializer(many=True, read_only=True)
     owner = serializers.ReadOnlyField(source='owner.id')
+    pledges = PledgeSerializer(many=True, read_only=True)
+    category = serializers.SlugRelatedField(slug_field='slug', queryset=Category.objects.all())
+    closing_date = serializers.DateTimeField()
 
 
     def create(self, validated_data):
