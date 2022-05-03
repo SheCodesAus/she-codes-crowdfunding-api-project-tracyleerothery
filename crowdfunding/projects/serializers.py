@@ -2,7 +2,6 @@
 # from unicodedata import category
 # from unittest.util import _MAX_LENGTH
 # from xml.etree.ElementTree import Comment
-from turtle import title
 from rest_framework import serializers
 from .models import Project, Pledge, Category, Comment
 from django.contrib.auth import get_user_model
