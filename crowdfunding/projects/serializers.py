@@ -15,10 +15,10 @@ class PledgeSerializer(serializers.Serializer):
     amount = serializers.IntegerField()
     comment = serializers.CharField(max_length=200)
     anonymous = serializers.BooleanField()
-    supporter = serializers.SlugRelatedField(
-        slug_field= 'username', 
-        queryset= get_user_model().objects.all()
-    )
+    # supporter = serializers.SlugRelatedField(
+    #     slug_field= 'username', 
+    #     queryset= get_user_model().objects.all()
+    # )
     # supporter = serializers.CharField(max_length=200)
     project_id = serializers.IntegerField()
     # pledge_type = PledgeTypeSerializer(many=False, read_only=False)
