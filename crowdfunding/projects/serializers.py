@@ -44,7 +44,7 @@ class ProjectSerializer(serializers.Serializer):
     owner = serializers.ReadOnlyField(source='owner.id')
     pledges = PledgeSerializer(many=True, read_only=True)
     category = serializers.SlugRelatedField(slug_field='slug', queryset=Category.objects.all())
-    closing_date = serializers.DateTimeField()
+    # closing_date = serializers.DateTimeField()
 
 
     def create(self, validated_data):
@@ -97,7 +97,7 @@ class ProjectDetailSerializer(ProjectSerializer):
 
 class CategorySerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
-    name = serializers.CharField(max_length=200)
+    category_name = serializers.CharField(max_length=200)
     slug = serializers.SlugField()
         
     def create(self, validated_data):
