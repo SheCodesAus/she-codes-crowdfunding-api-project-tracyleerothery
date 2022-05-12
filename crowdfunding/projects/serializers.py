@@ -104,3 +104,10 @@ class CategorySerializer(serializers.Serializer):
         return Category.objects.create(**validated_data)
 # and a link within ProjectSerializer
 # category = CategorySerializer(many=False, read_only=False)
+
+class CategoryDetailSerializer(CategorySerializer):
+        def update(self, instance, validated_data):
+            instance.category_name = validated_data.get('category_name', instance.category_name)
+            instance.slug = validated_data.get('slug', instance.slug)
+            instance.save()
+            return instance
