@@ -36,14 +36,14 @@ class CustomUserDetail(APIView):
         # IsOwnerOrReadOnly
         ]
 
-    def get_object(self, pk):
+    def get_object(self, username):
           try:
-               return CustomUser.objects.get(pk=pk)
+               return CustomUser.objects.get(username=username)
           except CustomUser.DoesNotExist:
                raise Http404
 
-    def get(self, request, pk):
-        user = self.get_object(pk)
+    def get(self, request, username):
+        user = self.get_object(username)
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
 
