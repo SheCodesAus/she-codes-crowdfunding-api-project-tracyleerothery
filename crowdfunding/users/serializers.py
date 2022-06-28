@@ -10,7 +10,7 @@ from django.contrib.auth.password_validation import validate_password
 
 #     class Meta:
 #         model = Badge
-#         fields = ['id', 'image', 'description', 'badge_type', 'badge_goal']
+#         fields = ['id', 'image', 'description', 'badge_type', 'badge_']
 
 class CustomUserSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()

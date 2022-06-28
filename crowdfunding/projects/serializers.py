@@ -20,7 +20,7 @@ class PledgeSerializer(serializers.Serializer):
     # )
     # supporter = serializers.CharField(max_length=200)
     project_id = serializers.IntegerField()
-    # pledge_type = PledgeTypeSerializer(many=False, read_only=False)
+    # _type = PledgeTypeSerializer(many=False, read_only=False)
     supporter = serializers.ReadOnlyField(source='supporter.id')
 
     def create(self, validated_data):
